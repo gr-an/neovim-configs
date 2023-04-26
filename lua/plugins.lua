@@ -1,17 +1,48 @@
 local plugins = {
-  "rebelot/kanagawa.nvim",
-  "airblade/vim-gitgutter", 
+  "lewis6991/impatient.nvim",
+  "williamboman/mason.nvim",
+  "williamboman/mason-lspconfig.nvim",
+  "neovim/nvim-lspconfig",
+
+  "hrsh7th/cmp-nvim-lsp",
+  "hrsh7th/cmp-buffer",
+  "hrsh7th/cmp-path",
+  "hrsh7th/cmp-cmdline",
+  "hrsh7th/nvim-cmp",
+
+  "stevearc/dressing.nvim",
+  "L3MON4D3/LuaSnip",
+  "saadparwaiz1/cmp_luasnip",
+
+  -- color theme
+  { "bluz71/vim-moonfly-colors",       name = "moonfly", lazy = false, priority = 1000 },
+
+  -- version control
+  "airblade/vim-gitgutter",
   "tpope/vim-fugitive",
+
+  -- navigation
   "nvim-telescope/telescope.nvim",
   "nvim-lua/plenary.nvim",
   "folke/which-key.nvim",
   "nvim-lualine/lualine.nvim",
   "goolord/alpha-nvim",
+  "tpope/vim-repeat",
+  "tpope/vim-unimpaired",
+
+  -- tools
+  "tpope/vim-surround",
+  "tpope/vim-commentary",
+  "tpope/vim-eunuch",
+  "qpkorr/vim-renamer",
   "smjonas/live-command.nvim",
-  "numToStr/FTerm.nvim",
   "ThePrimeagen/vim-be-good",
+  "dstein64/vim-startuptime",
+  "github/copilot.vim",
+
+  -- languages
   { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" },
-  'neovim/nvim-lspconfig',
+  "nvim-treesitter/nvim-treesitter-context",
 }
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"

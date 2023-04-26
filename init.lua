@@ -1,13 +1,12 @@
 require "general"
 
 require "plugins"
+require "impatient"
 
+require "config.postplugins"
 require "config.lualine"
 require "config.alpha"
-require "config.neovide"
+require "config.dressing"
 require "config.live-command"
-require "config.fterm"
-require "config.lspconfig"
 require "config.telescope"
-require "config.fterm"
-require "config.colors"
+require "config.complete"
