@@ -1,8 +1,10 @@
 local plugins = {
+  "folke/lsp-colors.nvim",
   "lewis6991/impatient.nvim",
   "williamboman/mason.nvim",
   "williamboman/mason-lspconfig.nvim",
   "neovim/nvim-lspconfig",
+  "MunifTanjim/prettier.nvim",
 
   "hrsh7th/cmp-nvim-lsp",
   "hrsh7th/cmp-buffer",
@@ -15,20 +17,23 @@ local plugins = {
   "saadparwaiz1/cmp_luasnip",
 
   -- color theme
-  { "bluz71/vim-moonfly-colors",       name = "moonfly", lazy = false, priority = 1000 },
+  { "bluz71/vim-moonfly-colors", name = "moonfly", lazy = false, priority = 1000 },
 
   -- version control
   "airblade/vim-gitgutter",
   "tpope/vim-fugitive",
 
   -- navigation
+  {
+    "nvim-telescope/telescope-file-browser.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
+  },
   "nvim-telescope/telescope.nvim",
   "nvim-lua/plenary.nvim",
+  "ThePrimeagen/harpoon",
   "folke/which-key.nvim",
   "nvim-lualine/lualine.nvim",
-  "goolord/alpha-nvim",
   "tpope/vim-repeat",
-  "tpope/vim-unimpaired",
 
   -- tools
   "tpope/vim-surround",

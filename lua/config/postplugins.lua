@@ -1,2 +1,4 @@
 vim.cmd("colorscheme moonfly") 
-require('leap').add_default_mappings()
+require("prettier").setup()
+
+vim.keymap.set('n', '<BS><BS>', ':G<CR>')

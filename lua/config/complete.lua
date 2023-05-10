@@ -84,21 +84,15 @@ cmp.setup({
   mapping = cmp.mapping.preset.insert({
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
+    -- ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-p>'] = cmp.mapping.select_prev_item(),
+    ['<C-n>'] = cmp.mapping.select_next_item(),
     ['<C-e>'] = cmp.mapping.abort(),
     ['<CR>'] = cmp.mapping.confirm({ select = false }),
   }),
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
-  }, {
-    { name = 'buffer' },
-  })
-})
-
-cmp.setup.filetype('gitcommit', {
-  sources = cmp.config.sources({
-    { name = 'cmp_git' },
   }, {
     { name = 'buffer' },
   })
@@ -125,47 +119,70 @@ local on_attach = function(client, bufnr)
 
   -- Change later
   -- See `:help vim.lsp.*` for documentation on any of the below functions
-  local bufopts = { noremap = true, silent = true, buffer = bufnr }
-  vim.keymap.set('n', '<leader>dd', vim.lsp.buf.declaration, bufopts)
-  vim.keymap.set('n', '<leader>df', vim.lsp.buf.definition, bufopts)
-  vim.keymap.set('n', '<leader>de', vim.lsp.buf.hover, bufopts)
-  vim.keymap.set('n', '<leader>dj', vim.lsp.buf.implementation, bufopts)
-  vim.keymap.set('n', '<leader>dh', vim.lsp.buf.signature_help, bufopts)
+  local bufopts = { noremap = true, silent = false, buffer = bufnr }
+  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+  vim.keymap.set('n', 'gh', vim.lsp.buf.signature_help, bufopts)
+  vim.keymap.set('i', '<C-k>', vim.lsp.buf.signature_help, bufopts)
 
-  vim.keymap.set('n', '<leader>dp', vim.lsp.buf.add_workspace_folder, bufopts)
-  vim.keymap.set('n', '<leader>dP', vim.lsp.buf.remove_workspace_folder, bufopts)
-  vim.keymap.set('n', '<leader>do', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, bufopts)
-  vim.keymap.set('n', '<leader>dt', vim.lsp.buf.type_definition, bufopts)
-  vim.keymap.set('n', '<leader>dn', vim.lsp.buf.rename, bufopts)
-  vim.keymap.set('n', '<leader>dk', vim.lsp.buf.code_action, bufopts)
-  vim.keymap.set('n', '<leader>dr', vim.lsp.buf.references, bufopts)
-  vim.keymap.set('n', '<leader>ds', function() vim.lsp.buf.format { async = true } end, bufopts)
+  -- vim.keymap.set('n', '<leader>dp', vim.lsp.buf.add_workspace_folder, bufopts)
+  -- vim.keymap.set('n', '<leader>dP', vim.lsp.buf.remove_workspace_folder, bufopts)
+  -- vim.keymap.set('n', '<leader>do', function()
+  --   print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  -- end, bufopts)
+  vim.keymap.set('n', 'gr', vim.lsp.buf.rename, bufopts)
+  vim.keymap.set('n', 'ga', vim.lsp.buf.code_action, bufopts)
+  vim.keymap.set('n', 'ge', ':Telescope lsp_references theme=ivy<CR>', bufopts)
+  vim.keymap.set('n', 'gj', ':Telescope lsp_implementations theme=ivy<CR>', bufopts)
+  vim.keymap.set('n', 'gd', ':Telescope lsp_definitions theme=ivy<CR>', bufopts)
+
+
+  vim.api.nvim_create_autocmd("BufWritePost", {
+    callback = function()
+      vim.lsp.buf.format()
+    end
+  })
 end
 
 require("mason").setup()
 require("mason-lspconfig").setup()
+require("mason-lspconfig").setup_handlers({
+  function(server_name)
+    require("lspconfig")[server_name].setup {
+      on_attach = on_attach,
+      capabilities = capabilities,
+    }
+  end,
+})
 
-
-local lspconfig = require "lspconfig"
-local servers = {
-  "html",
-  "marksman",
-  "tailwindcss",
-  "yamlls",
-  "pyright",
-  "tsserver",
-  "rust_analyzer",
-  "sqlls",
-  "lua_ls",
-  "eslint",
-  "astro",
-}
-
-for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-  }
+local signs = { Error = "e", Warn = "w", Hint = "?", Info = "i" }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
+vim.diagnostic.config({
+  virtual_text = { prefix = "", spacing = 10 },
+  severity_sort = true,
+  float = {
+    source = "always",
+  },
+})
+
+-- add border to lsp float windows
+local _border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
+
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+  vim.lsp.handlers.hover, {
+    border = _border
+  }
+)
+
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+  vim.lsp.handlers.signature_help, {
+    border = _border
+  }
+)
+
+vim.diagnostic.config {
+  float = { border = _border }
+}

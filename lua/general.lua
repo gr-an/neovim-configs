@@ -12,10 +12,11 @@ vim.o.expandtab = true
 vim.o.tabstop = TAB_WIDTH
 vim.o.shiftwidth = TAB_WIDTH
 
+vim.opt.listchars = {tab = '>>', trail = '~', extends = '>', precedes = '<', space = '·'}
+vim.opt.list = false
+vim.opt.autoread = true
+vim.opt.signcolumn = 'yes'
+vim.opt.cursorline = true
 
-vim.cmd("set listchars=tab:>>,trail:~,extends:>,precedes:<,space:·")
-vim.cmd("set list")
-vim.cmd("set autoread")
-vim.cmd("set signcolumn=yes")
-
+vim.keymap.set('n', '#', vim.cmd.write)
 vim.g.loaded_matchparen = 1
