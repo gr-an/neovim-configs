@@ -1,58 +1,58 @@
-local cmp = require("cmp")
-local luasnip = require("luasnip")
+local cmp = require('cmp')
+local luasnip = require('luasnip')
 
 local kind_icons = {
-  -- Text = "",
-  -- Method = "",
-  -- Function = "",
-  -- Constructor = "",
-  -- Field = "",
-  -- Variable = "",
-  -- Class = "ﴯ",
-  -- Interface = "",
-  -- Module = "",
-  -- Property = "ﰠ",
-  -- Unit = "",
-  -- Value = "",
-  -- Enum = "",
-  -- Keyword = "",
-  -- Snippet = "",
-  -- Color = "",
-  -- File = "",
-  -- Reference = "",
-  -- Folder = "",
-  -- EnumMember = "",
-  -- Constant = "",
-  -- Struct = "",
-  -- Event = "",
-  -- Operator = "",
-  -- TypeParameter = ""
+  -- Text = '',
+  -- Method = '',
+  -- Function = '',
+  -- Constructor = '',
+  -- Field = '',
+  -- Variable = '',
+  -- Class = 'ﴯ',
+  -- Interface = '',
+  -- Module = '',
+  -- Property = 'ﰠ',
+  -- Unit = '',
+  -- Value = '',
+  -- Enum = '',
+  -- Keyword = '',
+  -- Snippet = '',
+  -- Color = '',
+  -- File = '',
+  -- Reference = '',
+  -- Folder = '',
+  -- EnumMember = '',
+  -- Constant = '',
+  -- Struct = '',
+  -- Event = '',
+  -- Operator = '',
+  -- TypeParameter = ''
 
-  Text = "...",
-  Method = "M()",
-  Function = "f()",
-  Constructor = "New",
-  Field = "[f]",
-  Variable = "var",
-  Class = "C{}",
-  Interface = "I{}",
-  Module = "[M]",
-  Property = "(p)",
-  Unit = "un.",
-  Value = "123",
-  Enum = "E{}",
-  Keyword = "key",
-  Snippet = "</>",
-  Color = "rgb",
-  File = "<f>",
-  Reference = "& r",
-  Folder = "<d>",
-  EnumMember = "E.B",
-  Constant = "VAR",
-  Struct = "S{}",
-  Event = "*ev",
-  Operator = "+-=",
-  TypeParameter = "<T>"
+  Text = '...',
+  Method = 'M()',
+  Function = 'f()',
+  Constructor = 'New',
+  Field = '[f]',
+  Variable = 'var',
+  Class = 'C{}',
+  Interface = 'I{}',
+  Module = '[M]',
+  Property = '(p)',
+  Unit = 'un.',
+  Value = '123',
+  Enum = 'E{}',
+  Keyword = 'key',
+  Snippet = '</>',
+  Color = 'rgb',
+  File = '<f>',
+  Reference = '& r',
+  Folder = '<d>',
+  EnumMember = 'E.B',
+  Constant = 'VAR',
+  Struct = 'S{}',
+  Event = '*ev',
+  Operator = '+-=',
+  TypeParameter = '<T>'
 }
 
 cmp.setup({
@@ -63,11 +63,11 @@ cmp.setup({
       vim_item.kind = kind_icons[vim_item.kind]
 
       vim_item.menu = ({
-        buffer = "[buf]",
-        nvim_lsp = "[lsp]",
-        luasnip = "[snp]",
-        nvim_lua = "[lua]",
-        latex_symbols = "[tex]",
+        buffer = '[buf]',
+        nvim_lsp = '[lsp]',
+        luasnip = '[snp]',
+        nvim_lua = '[lua]',
+        latex_symbols = '[tex]',
       })[entry.source.name]
       return vim_item
     end
@@ -136,48 +136,44 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', 'gj', ':Telescope lsp_implementations theme=ivy<CR>', bufopts)
   vim.keymap.set('n', 'gd', ':Telescope lsp_definitions theme=ivy<CR>', bufopts)
 
-
-  vim.api.nvim_create_autocmd("BufWritePost", {
-    callback = function()
-      vim.lsp.buf.format()
-    end
-  })
+  vim.keymap.set('n', '#', vim.lsp.buf.format, bufopts)
+  vim.keymap.set('v', '#', vim.lsp.buf.format, bufopts)
 end
 
-require("mason").setup()
-require("mason-lspconfig").setup()
-require("mason-lspconfig").setup_handlers({
+require('mason').setup()
+require('mason-lspconfig').setup()
+require('mason-lspconfig').setup_handlers({
   function(server_name)
-    require("lspconfig")[server_name].setup {
+    require('lspconfig')[server_name].setup {
       on_attach = on_attach,
       capabilities = capabilities,
     }
   end,
 })
 
-local signs = { Error = "e", Warn = "w", Hint = "?", Info = "i" }
+local signs = { Error = 'e', Warn = 'w', Hint = '?', Info = 'i' }
 for type, icon in pairs(signs) do
-  local hl = "DiagnosticSign" .. type
+  local hl = 'DiagnosticSign' .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 vim.diagnostic.config({
-  virtual_text = { prefix = "", spacing = 10 },
+  virtual_text = { prefix = '', spacing = 10 },
   severity_sort = true,
   float = {
-    source = "always",
+    source = 'always',
   },
 })
 
 -- add border to lsp float windows
-local _border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
+local _border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' }
 
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
   vim.lsp.handlers.hover, {
     border = _border
   }
 )
 
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
   vim.lsp.handlers.signature_help, {
     border = _border
   }

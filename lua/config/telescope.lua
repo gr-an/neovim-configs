@@ -135,12 +135,6 @@ local function open_folder_picker()
   }):find()
 end
 
-if #vim.fn.argv() == 0 then
-  vim.api.nvim_create_autocmd("VimEnter", {
-    callback = open_folder_picker
-  })
-end
-
 vim.keymap.set('n', '<Space>p', open_folder_picker, {})
 vim.keymap.set('n', '<Space>P', ":e /Users/vahagn/.config/projects<CR>", {})
 
