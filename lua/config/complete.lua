@@ -151,6 +151,12 @@ require('mason-lspconfig').setup_handlers({
   end,
 })
 
+require('lspconfig').tailwindcss.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  filetypes = { "html", "css", "scss", "javascript", "javascriptreact", "typescript", "typescriptreact", "rust" },
+}
+
 local signs = { Error = 'e', Warn = 'w', Hint = '?', Info = 'i' }
 for type, icon in pairs(signs) do
   local hl = 'DiagnosticSign' .. type

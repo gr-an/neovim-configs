@@ -20,4 +20,16 @@ vim.opt.autoread = true
 vim.opt.signcolumn = 'yes'
 vim.opt.cursorline = true
 
-vim.g.loaded_matchparen = 1
+vim.g.moonflyVirtualTextColor = true
+vim.g.moonflyUnderlineMatchParen = true
+vim.g.moonflyWinSeparator = 2
+vim.opt.fillchars = { horiz = '━', horizup = '┻', horizdown = '┳', vert = '┃', vertleft = '┫', vertright = '┣', verthoriz = '╋', }
+
+-- useState
+vim.keymap.set("n", "<BS>s", ":norm viw\"9y<CR>:norm iconst [<CR>:norm A, <CR>:norm \"9pb~<CR>:norm hiset<CR>:norm A] = useState()<CR>:norm h<CR>", { silent = true })
+
+-- useEffect
+vim.keymap.set("n", "<BS>e", ":norm IuseEffect(() => {<CR>:norm o}, [])<CR>:norm O<Tab><CR>", { silent = true })
+
+-- vim.g.loaded_matchparen = 1
+

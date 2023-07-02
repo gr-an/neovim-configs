@@ -1,23 +1,3 @@
-vim.cmd("colorscheme moonfly")
-
-require("prettier").setup()
-
-vim.keymap.set('n', '<BS><BS>', ':G<CR>')
-vim.keymap.set('n', '<BS>f', ':diffget //2<CR>')
-vim.keymap.set('n', '<BS>j', ':diffget //3<CR>')
-
-require("obsidian").setup({
-  dir = "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/obsidian"
-})
-
-vim.keymap.set("n", "gf", function()
-  if require("obsidian").util.cursor_on_markdown_link() then
-    return "<cmd>ObsidianFollowLink<CR>"
-  else
-    return "gf"
-  end
-end, { noremap = false, expr = true })
-
 require("rest-nvim").setup({
   -- Open request results in a horizontal split
   result_split_horizontal = false,

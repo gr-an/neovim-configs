@@ -16,9 +16,6 @@ local plugins = {
   "L3MON4D3/LuaSnip",
   "saadparwaiz1/cmp_luasnip",
 
-  -- color theme
-  { "bluz71/vim-moonfly-colors", name = "moonfly", lazy = false, priority = 1000 },
-
   -- version control
   "airblade/vim-gitgutter",
   "tpope/vim-fugitive",
@@ -44,10 +41,16 @@ local plugins = {
   "ThePrimeagen/vim-be-good",
   "dstein64/vim-startuptime",
   "github/copilot.vim",
+  "rest-nvim/rest.nvim",
+
+  "epwalsh/obsidian.nvim",
 
   -- languages
   { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" },
   "nvim-treesitter/nvim-treesitter-context",
+
+  -- color theme
+  { "bluz71/vim-moonfly-colors",       name = "moonfly", lazy = false, priority = 1000 },
 }
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
