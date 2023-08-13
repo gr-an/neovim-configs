@@ -33,45 +33,21 @@ lazy.setup({
   "nvim-lualine/lualine.nvim",
   "tpope/vim-repeat",
 
-    -- Git labels
-    {
-      'lewis6991/gitsigns.nvim',
-      lazy = true,
-      dependencies = {
-        'nvim-lua/plenary.nvim',
-        'kyazdani42/nvim-web-devicons',
-      },
-      config = function()
-        require('gitsigns').setup{}
-      end
-    },
-    -- init.lua:
-    {
-    'nvim-telescope/telescope.nvim', tag = '0.1.2',
-    -- or                              , branch = '0.1.x',
-      dependencies = { 'nvim-lua/plenary.nvim' }
-    },
+  "folke/lsp-colors.nvim",
+  "lewis6991/impatient.nvim",
+  "williamboman/mason.nvim",
+  "williamboman/mason-lspconfig.nvim",
+  "neovim/nvim-lspconfig",
 
-    -- Treesitter
-    { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
+  "hrsh7th/cmp-nvim-lsp",
+  "hrsh7th/cmp-buffer",
+  "hrsh7th/cmp-path",
+  "hrsh7th/cmp-cmdline",
+  "hrsh7th/nvim-cmp",
 
-    -- LSP
-    { 'neovim/nvim-lspconfig' },
+  "stevearc/dressing.nvim",
+  "L3MON4D3/LuaSnip",
+  "saadparwaiz1/cmp_luasnip",
 
-    -- Autocomplete
-    {
-      'hrsh7th/nvim-cmp',
-      -- load cmp on InsertEnter
-      event = 'InsertEnter',
-      -- these dependencies will only be loaded when cmp loads
-      -- dependencies are always lazy-loaded unless specified otherwise
-      dependencies = {
-        'L3MON4D3/LuaSnip',
-        'hrsh7th/cmp-nvim-lsp',
-        'hrsh7th/cmp-path',
-        'hrsh7th/cmp-buffer',
-        'saadparwaiz1/cmp_luasnip',
-      },
-    },
-  },
+},
 })
